@@ -33,6 +33,12 @@ public class Application {
             Arrays.stream(cars).forEach(car -> car.move(Randoms.pickNumberInRange(0,9)));
         }
 
+        int winnerScore = Arrays.stream(cars).mapToInt(car -> car.getLocation()).max().orElse(0);
+
+        Arrays.stream(cars).filter(car -> car.isWinner(winnerScore)).forEach(car -> {
+            System.out.println(car.toString());
+        });
+
 
     }
 
@@ -50,6 +56,27 @@ public class Application {
         //전진하는 조건은 0에서 9 사이에서 무작위 값을 구한 후 무작위 값이 4 이상일 경우이다. 5
         public void move(int randomNum) {
             if(randomNum >= 4) this.location += 1;
+        }
+
+        public int getLocation() {
+            return this.location;
+        }
+
+        private String makeLine() {
+            String result = "";
+            for(int i = 0; i < this.location; ++i) {
+                result += "-";
+            }
+            return result;
+        }
+
+        public boolean isWinner(int maxScore) {
+            return maxScore == this.location;
+        }
+
+        //각 자동차에 이름을 부여할 수 있다. 전진하는 자동차를 출력할 때 자동차 이름을 같이 출력한다. 2
+        public String toString() {
+            return String.format("%s : %s", this.name, makeLine());
         }
     }
 }
