@@ -14,10 +14,18 @@ public class Application {
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
         String carNames = Console.readLine();
         System.out.println("시도할 회수는 몇회인가요?");
-
         //사용자는 몇 번의 이동을 할 것인지를 입력할 수 있어야 한다.
         int tryNum = Integer.parseInt(Console.readLine());
-        
+
+        //자동차 이름은 쉼표(,)를 기준으로 구분하며 이름은 5자 이하만 가능하다.
+        String carSplit[] = carNames.split(",");
+        Car cars[] = new Car[carSplit.length];
+
+        int idx = 0;
+        for(String carName : carSplit) {
+            if(carName.length() > 5) throw new IllegalArgumentException();
+            cars[idx++] = new Car(carName, 0);
+        }
 
     }
 
