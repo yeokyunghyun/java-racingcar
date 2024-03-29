@@ -27,6 +27,13 @@ public class Application {
             if(carName.length() > 5) throw new IllegalArgumentException();
             cars[idx++] = new Car(carName, 0);
         }
+
+        //주어진 횟수 동안 n대의 자동차는 전진 또는 멈출 수 있다.
+        for(int i = 0; i < tryNum; ++i) {
+            Arrays.stream(cars).forEach(car -> car.move(Randoms.pickNumberInRange(0,9)));
+        }
+
+
     }
 
     private static class Car {
