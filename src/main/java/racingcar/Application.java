@@ -7,6 +7,7 @@ import racingcar.domain.Cars;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
@@ -25,18 +26,14 @@ public class Application {
         System.out.println("실행 결과");
         //주어진 횟수 동안 n대의 자동차는 전진 또는 멈출 수 있다.
         for(int i = 0; i < tryNum; ++i) {
-            
-            Arrays.stream(cars).forEach(car -> car.move(Randoms.pickNumberInRange(0,9)));
-            Arrays.stream(cars).forEach(car -> {System.out.println(car.toString());});
+            cars.move(Randoms.pickNumberInRange(0,9));
+            cars.print();
             System.out.println();
         }
-
-        int winnerScore = Arrays.stream(cars).mapToInt(car -> car.getLocation()).max().orElse(0);
-        String winnerNames[] = Arrays.stream(cars).filter(car -> car.isWinner(winnerScore)).map(car -> car.getName()).toArray(String[]::new);
-
         //자동차 경주 게임을 완료한 후 누가 우승했는지를 알려준다. 우승자는 한 명 이상일 수 있다.
         //우승자가 여러 명일 경우 쉼표(,)를 이용하여 구분한다.
-        String finalWinners = String.join(", ", winnerNames);
-        System.out.print(String.format("최종 우승자 : %s", finalWinners));
+        List<String> finalWinners = cars.findWinner();
+        String result = finalWinners.stream().collect(Collectors.joining(", "));
+        System.out.print(String.format("최종 우승자 : %s", result));
     }
 }
