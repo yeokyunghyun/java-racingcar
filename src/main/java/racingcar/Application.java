@@ -3,8 +3,10 @@ package racingcar;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 import racingcar.domain.Car;
+import racingcar.domain.Cars;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
@@ -17,18 +19,13 @@ public class Application {
         int tryNum = Integer.parseInt(Console.readLine());
 
         //자동차 이름은 쉼표(,)를 기준으로 구분하며 이름은 5자 이하만 가능하다.
-        String carSplit[] = carNames.split(",");
-        Car cars[] = new Car[carSplit.length];
-
-        int idx = 0;
-        for(String carName : carSplit) {
-            if(carName.length() > 5) throw new IllegalArgumentException();
-            cars[idx++] = new Car(carName, 0);
-        }
+        List<Car> carList = Arrays.stream(carNames.split(",")).map(carName -> new Car(carName, 0)).toList();
+        Cars cars = new Cars(carList);
 
         System.out.println("실행 결과");
         //주어진 횟수 동안 n대의 자동차는 전진 또는 멈출 수 있다.
         for(int i = 0; i < tryNum; ++i) {
+            
             Arrays.stream(cars).forEach(car -> car.move(Randoms.pickNumberInRange(0,9)));
             Arrays.stream(cars).forEach(car -> {System.out.println(car.toString());});
             System.out.println();
