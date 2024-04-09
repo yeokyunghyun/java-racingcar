@@ -9,15 +9,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static camp.nextstep.edu.missionutils.Console.*;
+
 public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
 
         System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
-        String carNames = Console.readLine();
+        String carNames = readLine();
         System.out.println("시도할 회수는 몇회인가요?");
         //사용자는 몇 번의 이동을 할 것인지를 입력할 수 있어야 한다.
-        int tryNum = Integer.parseInt(Console.readLine());
+        int tryNum = Integer.parseInt(readLine());
 
         //자동차 이름은 쉼표(,)를 기준으로 구분하며 이름은 5자 이하만 가능하다.
         List<Car> carList = Arrays.stream(carNames.split(",")).map(carName -> new Car(carName, 0)).toList();
